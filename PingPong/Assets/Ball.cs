@@ -27,4 +27,17 @@ public class Ball : MonoBehaviour
         transform.position = startPos;
         Launch();
     }
+
+    public void BallSpeed(int value)
+    {
+        if (value == -1 && speed > 3)
+            speed -= 1;
+        if (value == 1 && speed < 9)
+            speed += 1;
+    }
+
+    public float GetY_ball()
+    {
+        return rb.velocity.y;
+    }
 }
