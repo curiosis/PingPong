@@ -11,6 +11,8 @@ public class Movement : MonoBehaviour
 
     public GameObject ball, gameManager, playerInfo;
 
+    public SoundManager soundManager;
+
     Rigidbody2D rb;
     float movement;
     float yBot;
@@ -76,11 +78,19 @@ public class Movement : MonoBehaviour
                 break;
             case 6:
                 gameManager.GetComponent<GameManager>().EffectText("jet BALL!", plNo);
-                ball.GetComponent<Ball>().BallSpeed(1);
+                ball.GetComponent<Ball>().BallVariety(1);
                 break;
             case 7:
                 gameManager.GetComponent<GameManager>().EffectText("snail ball", plNo);
-                ball.GetComponent<Ball>().BallSpeed(-1);
+                ball.GetComponent<Ball>().BallVariety(2);
+                break;
+            case 8:
+                gameManager.GetComponent<GameManager>().EffectText("GROW UP!", plNo);
+                ball.GetComponent<Ball>().BallVariety(3);
+                break;
+            case 9:
+                gameManager.GetComponent<GameManager>().EffectText("tiny shy ball :)", plNo);
+                ball.GetComponent<Ball>().BallVariety(4);
                 break;
         }
     }

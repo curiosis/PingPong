@@ -5,6 +5,7 @@ using UnityEngine;
 public class Goal : MonoBehaviour
 {
     public bool isPlayer1Goal;
+    public SoundManager soundManager;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -14,7 +15,8 @@ public class Goal : MonoBehaviour
                 GameObject.Find("GameManager").GetComponent<GameManager>().Player1Scored();
             else
                 GameObject.Find("GameManager").GetComponent<GameManager>().Player2Scored();
+
+            soundManager.PlaySound("goal"+Random.Range(0, 3).ToString());
         }
-            
     }
 }

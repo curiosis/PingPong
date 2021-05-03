@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject player2, player2Goal, Player2Text, Player2Effect;
     int Player1Score, Player2Score;
 
-    public GameObject gameInfo;
+    public GameObject gameInfo, winPanel, line, winner;
 
     public GameObject addWallT, addWallB;
     System.Random rnd = new System.Random();
@@ -30,10 +31,34 @@ public class GameManager : MonoBehaviour
             infoPanel.SetActive(true);
         else
             infoPanel.SetActive(false);
-        if(Player1Score == 5 || Player2Score == 5)
+
+        if (Player1Score == 5)
+            EndGame(1);
+        else if (Player2Score == 5)
+            EndGame(0);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("THE END!");
+            SceneManager.LoadScene(0);
         }
+    }
+
+    void EndGame(int i)
+    {
+        if(i == 1)
+            winner.GetComponent<TextMeshProUGUI>().text = "Player 1\nWON!";
+        else
+            winner.GetComponent<TextMeshProUGUI>().text = "Player 2\nWON!";
+
+        winPanel.SetActive(true);
+        line.SetActive(false);
+        player1.SetActive(false);
+        player2.SetActive(false);
+        ball.SetActive(false);
+        Player1Effect.SetActive(false);
+        Player2Effect.SetActive(false);
+        Player1Text.SetActive(false);
+        Player2Text.SetActive(false);
     }
 
     public void Player1Scored()
@@ -52,8 +77,8 @@ public class GameManager : MonoBehaviour
 
     void ResetPosition()
     {
-        player1.GetComponent<Movement>().Variety(rnd.Next(1, 8), 1);
-        player2.GetComponent<Movement>().Variety(rnd.Next(1, 8), 2);
+        player1.GetComponent<Movement>().Variety(rnd.Next(1, 11), 1);
+        player2.GetComponent<Movement>().Variety(rnd.Next(1, 11), 2);
         player1.GetComponent<Movement>().updateInfo();
         player2.GetComponent<Movement>().updateInfo();
         ball.GetComponent<Ball>().Reset();
@@ -86,6 +111,6 @@ public class GameManager : MonoBehaviour
 
     void updateGameInfo()
     {
-        gameInfo.GetComponent<TextMeshProUGUI>().text = "ball speed: " + ball.GetComponent<Ball>().speed + "\nadd wall: " + addWallT.activeSelf;
+        gameInfo.GetComponent<TextMeshProUGUI>().text = "ball scale: " + ball.GetComponent<Ball>().gameObject.transform.localScale.x + "\nball speed: " + ball.GetComponent<Ball>().speed + "\nadd wall: " + addWallT.activeSelf;
     }
 }
